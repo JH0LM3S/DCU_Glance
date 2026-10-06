@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>College planner</title>
+<title>DCU Glance</title>
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-title" content="Planner">
+<meta name="apple-mobile-web-app-title" content="DCU Glance">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#0c426c">
 <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACpUlEQVR42u3dMU7zMBiA4TbKwAADB+EScBY2kDgKUkfO0lNwEIYuDAwMLJUoqlNsx5/9PBP6ifIn6ds0Soy7vb5/2sApk0OAOBAH4kAciANxIA7EgTgQB4gDcSAOxIE4EAfiQByIA3GAOBAHw8Rx2O8O+93xD7a5nDlQFn/9483Ds2125kAcaW/BxN/aZmcOxIE4EAfiQBx0pshNsI/Xz6Ib/Xv9pf/HENt8+3LlzIGPFcSBOBAH4kAciAPEQYdxfL0/Xvxb2+zMQX5hBhj/vNXmu7dA77+I23xsW+IrNdp/DNYlD95wzYE4EAfiQByIA3GAOBAH4kAciANxIA76UGmwT/ahBlQYNOPMgTgQB+JAHIgDcSAOxIE4GNf6fyt79sslLvjempHX2c+ZI+VrR5Z+NcnI6+wnjvQ9t6RrDlyQIg7EgTgQB4gDcRA0jvR7w5Yc8cyRsudLj87I68yr0jyk/m4l4kF2zYE4EAfiQByIA3EgDnph9Hmqs5OlXHAPyujzfx2dTRujulOm0Vk61Y7R53n2fN0l01/19CWNPscFKeJAHCAOxIE4EAeDxBFlVHf6ffH0JY0+z7PnLYzqTnnVlz5baX/0+foP3krsf4l1lhhAv+5r75oDcSAOxIE4EAfiQBwMw+jz3tbZz5nD3Od519lPHGY0z7ukaw7EgTgQB+JAHIgDcUCDcZjRPO+SvZ05zH3ebBkbc5/HZe5zXJAiDsSBOBAH4gBxIA7CxLF0XnBaOJ5F4jh5H1cfRcso8YBi7q93Wv9Y8aStpkJHewq3xVQ7zlPQ7abCEZ5Cb70yiq5/rrYPrkbDveXmzvaHSB8riANxIA4QB+JAHIgDcSAOxIE4EAfiQBwgDsSBOBAH4kAciANxIA7EAeJAHIgDcSAOmvENqvMorxL6gJYAAAAASUVORK5CYII=">
@@ -49,6 +49,8 @@ button{cursor:pointer}
 h1,h2,h3{font-family:var(--display);margin:0;line-height:1.15}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--brand);border-bottom:4px solid var(--gold)}
 .top-in{max-width:1040px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px;justify-content:space-between}
+.brandmark{display:none;font-family:var(--display);font-weight:700;font-size:20px;color:var(--gold);letter-spacing:-.01em;white-space:nowrap}
+@media (min-width:760px){.brandmark{display:block}}
 .tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{border:0;background:transparent;padding:8px 14px;border-radius:999px;font-weight:600;color:rgba(255,255,255,.85);white-space:nowrap}
@@ -170,6 +172,7 @@ textarea{min-height:110px;font-family:ui-monospace,Menlo,monospace;font-size:13p
 </head>
 <body>
 <div class="top"><div class="top-in">
+  <span class="brandmark">DCU Glance</span>
   <div class="tabs" role="tablist" aria-label="Views" id="tabs"></div>
   <div style="display:flex;gap:8px">
     <button class="iconbtn" id="addBtn">Add</button>
