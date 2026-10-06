@@ -49,8 +49,7 @@ button{cursor:pointer}
 h1,h2,h3{font-family:var(--display);margin:0;line-height:1.15}
 .top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--brand);border-bottom:4px solid var(--gold)}
 .top-in{max-width:1040px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px;justify-content:space-between}
-.brandmark{display:none;font-family:var(--display);font-weight:700;font-size:20px;color:var(--gold);letter-spacing:-.01em;white-space:nowrap}
-@media (min-width:760px){.brandmark{display:block}}
+.brandmark{display:block;font-family:var(--display);font-weight:700;font-size:20px;color:var(--gold);letter-spacing:-.01em;white-space:nowrap}
 .tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
 .tab{border:0;background:transparent;padding:8px 14px;border-radius:999px;font-weight:600;color:rgba(255,255,255,.85);white-space:nowrap}
@@ -152,6 +151,30 @@ select,input[type=text],input[type=url],input[type=number],input[type=datetime-l
 .dupelist{display:flex;flex-direction:column;gap:6px;max-height:280px;overflow:auto}
 .dupe{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:14px}
 .dupe b{display:block}
+.hl{display:flex;align-items:center;gap:10px}
+.menubtn{display:none;border:1px solid rgba(255,255,255,.55);background:transparent;color:#fff;border-radius:10px;width:44px;height:40px;place-items:center;padding:0}
+#addBtn{background:var(--gold);color:var(--on-gold);border-color:var(--gold)}
+.menu{position:absolute;left:0;right:0;top:calc(100% + 4px);background:var(--brand);border-bottom:4px solid var(--gold);padding:8px 12px 14px;box-shadow:0 14px 24px rgba(0,0,0,.28);display:flex;flex-direction:column;gap:4px}
+.menu[hidden]{display:none}
+.menu button{background:transparent;border:0;color:#fff;text-align:left;font-weight:600;font-size:17px;padding:12px 14px;border-radius:10px;min-height:48px}
+.menu button[aria-current="page"]{background:var(--gold);color:var(--on-gold)}
+.menu hr{border:0;border-top:1px solid rgba(255,255,255,.25);margin:6px 0;width:100%}
+@media (max-width:759px){.tabs{display:none}.menubtn{display:grid}#dataBtn{display:none}}
+@media (min-width:760px){.menu{display:none!important}}
+.seg{display:flex;gap:4px;background:var(--surface2);border:1px solid var(--line);border-radius:14px;padding:4px;margin:14px 0 4px}
+.segbtn{flex:1;border:0;background:transparent;border-radius:10px;padding:10px 6px;font-weight:600;color:var(--muted);min-height:44px}
+.segbtn span{font-weight:500;margin-left:4px}
+.segbtn[aria-selected="true"]{background:var(--gold);color:var(--on-gold)}
+.tgroup h3{font-family:var(--body);font-size:15px;font-weight:600;color:var(--muted);margin:18px 2px 8px}
+.tgroup.bad h3{color:var(--bad)}
+.tlist{display:grid;gap:10px;grid-template-columns:1fr}
+@media (min-width:900px){.tlist{grid-template-columns:1fr 1fr}}
+.tcard{background:var(--surface);border:1px solid var(--line);border-left:8px solid var(--c);border-radius:12px;padding:12px 14px}
+.ttitle{font-family:var(--display);font-weight:700;font-size:18px;line-height:1.25;text-align:left;background:none;border:0;padding:0;width:100%;overflow-wrap:anywhere}
+.tmeta{color:var(--muted);font-size:14px;margin:3px 0 10px}
+.tfoot{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+.tfoot .sp{flex:1}
+.tfoot .btn{min-height:40px}
 /* dialog */
 dialog{border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);padding:0;width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 24px)}
 dialog::backdrop{background:rgba(8,14,28,.55)}
@@ -172,13 +195,18 @@ textarea{min-height:110px;font-family:ui-monospace,Menlo,monospace;font-size:13p
 </head>
 <body>
 <div class="top"><div class="top-in">
-  <span class="brandmark">DCU Glance</span>
+  <div class="hl">
+    <button class="menubtn" id="menuBtn" aria-expanded="false" aria-controls="menu" aria-label="Open menu"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path id="menuIcon" d="M3 6h18M3 12h18M3 18h18" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" fill="none"/></svg></button>
+    <span class="brandmark">DCU Glance</span>
+  </div>
   <div class="tabs" role="tablist" aria-label="Views" id="tabs"></div>
   <div style="display:flex;gap:8px">
     <button class="iconbtn" id="addBtn">Add</button>
     <button class="iconbtn" id="dataBtn" aria-label="Import and backup">Data</button>
   </div>
-</div></div>
+</div>
+<nav class="menu" id="menu" aria-label="Main menu" hidden></nav>
+</div>
 <main class="wrap" id="app"></main>
 <dialog id="dlg"></dialog>
 <div id="toastHost"></div>
@@ -189,10 +217,10 @@ textarea{min-height:110px;font-family:ui-monospace,Menlo,monospace;font-size:13p
 var KEY='collegePlanner.v1';
 var COLORS=['#1f6fb8','#d99a00','#0f8f7d','#c2255c','#8e2fb0','#d0510f','#4a7c0f','#0b7fa6'];
 var TYPES={assignment:'Assignment',exam:'Exam',quiz:'Quiz or test',project:'Project',reading:'Reading',other:'Other'};
-var STATUS={todo:'To do',doing:'In progress',submitted:'Submitted',graded:'Graded'};
+var STATUS={todo:'To do',doing:'Doing',submitted:'Submitted',graded:'Graded'};
 var memoryFallback=null;
 
-var S={modules:[],items:[],tab:'glance',calMonth:startOfMonth(new Date()),selDay:ymd(new Date()),modFilter:'all',types:{},confirm:null};
+var S={modules:[],items:[],tab:'glance',calMonth:startOfMonth(new Date()),selDay:ymd(new Date()),modFilter:'all',types:{},trackTab:'todo',doneAll:false,confirm:null};
 
 /* ---------- storage ---------- */
 function load(){
@@ -298,6 +326,9 @@ function renderTabs(){
   document.getElementById('tabs').innerHTML=defs.map(function(t){
     return '<button class="tab" role="tab" data-tab="'+t[0]+'" aria-selected="'+(S.tab===t[0])+'">'+t[1]+'</button>';
   }).join('');
+  document.getElementById('menu').innerHTML=defs.map(function(t){
+    return '<button data-tab="'+t[0]+'"'+(S.tab===t[0]?' aria-current="page"':'')+'>'+t[1]+'</button>';
+  }).join('')+'<hr><button data-act="data">Data and backup</button>';
 }
 
 function filterBar(){
@@ -399,23 +430,48 @@ function viewPlanner(){
   return h;
 }
 
+function trackCard(it){
+  var r=rel(it),st=it.status;
+  var meta=esc(modName(it))+' &middot; '+TYPES[it.type||'other']+' &middot; '+(isRange(it)?rangeStr(it):dateStr(it.due)+' '+timeStr(it.due))+(it.weight?' &middot; '+esc(it.weight)+'%':'')+(it.missing?' '+FLAG:'');
+  var acts='';
+  function B(label,to,cls){return '<button class="btn small '+(cls||'')+'" data-act="setStatus" data-id="'+it.id+'" data-st="'+to+'">'+label+'</button>';}
+  if(st==='todo')acts=B('Start','doing','ghost')+'<span class="sp"></span>'+B('Mark submitted','submitted','primary');
+  else if(st==='doing')acts=B('Back to to do','todo','ghost')+'<span class="sp"></span>'+B('Mark submitted','submitted','primary');
+  else if(st==='submitted')acts=B('Undo','doing','ghost')+'<span class="sp"></span><button class="btn small primary" data-act="editItem" data-id="'+it.id+'">Add mark</button>';
+  else acts=B('Undo','doing','ghost');
+  var pill='<span class="pill '+r.cls+'">'+r.txt+'</span>';
+  if(st==='graded'&&it.mark!==''&&it.mark!=null)pill+=' <span class="pill ok">'+esc(it.mark)+'%</span>';
+  return '<article class="tcard" style="--c:'+colorOf(it)+'"><button class="ttitle" data-act="editItem" data-id="'+it.id+'">'+esc(it.title)+'</button>'+
+    '<div class="tmeta">'+meta+'</div><div class="tfoot">'+(st==='todo'||st==='doing'?pill+'<span class="sp"></span>':pill+'<span class="sp"></span>')+'</div><div class="tfoot" style="margin-top:8px">'+acts+'</div></article>';
+}
 function viewTracker(){
   if(!S.items.length)return '<div style="margin-top:24px">'+emptyState()+'</div>';
-  var h=filterBar()+'<div class="board">';
-  Object.keys(STATUS).forEach(function(st){
-    var list=visible().filter(function(i){return i.status===st;}).sort(sortByDue);
-    h+='<section class="col"><h3>'+STATUS[st]+'<span>'+list.length+'</span></h3>';
-    h+=list.map(function(it){
-      var r=rel(it);
-      var so=Object.keys(STATUS).map(function(k){return '<option value="'+k+'"'+(it.status===k?' selected':'')+'>'+STATUS[k]+'</option>';}).join('');
-      return '<div class="card" style="--c:'+colorOf(it)+'"><button class="title" data-act="editItem" data-id="'+it.id+'">'+esc(it.title)+'</button>'+
-        '<div class="meta">'+esc(modName(it))+' &middot; '+(isRange(it)?rangeStr(it):dateStr(it.due))+(it.status==='graded'&&it.mark!==''&&it.mark!=null?' &middot; '+esc(it.mark)+'%':'')+(it.missing?' '+FLAG:'')+'</div>'+
-        (!isDone(it)?'<div style="margin-bottom:8px"><span class="pill '+r.cls+'">'+r.txt+'</span></div>':'')+
-        '<select class="statusSel" data-id="'+it.id+'" aria-label="Status for '+esc(it.title)+'">'+so+'</select></div>';
-    }).join('')||'<p class="hint" style="margin:4px">Nothing here.</p>';
-    h+='</section>';
-  });
-  return h+'</div>';
+  var vis=visible(),bk={todo:[],doing:[],done:[]};
+  vis.forEach(function(i){bk[i.status==='todo'?'todo':i.status==='doing'?'doing':'done'].push(i);});
+  var tabs=[['todo','To do'],['doing','Doing'],['done','Done']];
+  var h=filterBar()+'<div class="seg" role="tablist" aria-label="Tracker status">'+tabs.map(function(t){
+    return '<button class="segbtn" role="tab" data-act="trackTab" data-key="'+t[0]+'" aria-selected="'+(S.trackTab===t[0])+'">'+t[1]+'<span>'+bk[t[0]].length+'</span></button>';
+  }).join('')+'</div>';
+  var list=bk[S.trackTab].slice();
+  if(!list.length){
+    var msg={todo:['Nothing left to do','Everything is started or finished. Add new work when it is posted on Loop.'],doing:['Nothing in progress','Tap Start on something in To do when you begin it.'],done:['Nothing finished yet','Work you mark as submitted shows up here.']}[S.trackTab];
+    return h+'<div class="empty" style="margin-top:14px"><h3>'+msg[0]+'</h3><p>'+msg[1]+'</p></div>';
+  }
+  if(S.trackTab==='done'){
+    list.sort(function(a,b){return new Date(b.due)-new Date(a.due);});
+    var shown=S.doneAll?list:list.slice(0,8);
+    h+='<div class="tlist" style="margin-top:14px">'+shown.map(trackCard).join('')+'</div>';
+    if(list.length>shown.length)h+='<div style="text-align:center;margin-top:14px"><button class="btn" data-act="showAllDone">Show all '+list.length+'</button></div>';
+    return h;
+  }
+  list.sort(sortByDue);
+  var now=new Date(),g={over:[],week:[],later:[]};
+  list.forEach(function(i){var d=new Date(i.due);(d<now?g.over:dayDiff(i.due)<=7?g.week:g.later).push(i);});
+  function grp(cls,title,arr){
+    if(!arr.length)return '';
+    return '<section class="tgroup '+cls+'"><h3>'+title+' ('+arr.length+')</h3><div class="tlist">'+arr.map(trackCard).join('')+'</div></section>';
+  }
+  return h+grp('bad','Overdue',g.over)+grp('','Next 7 days',g.week)+grp('','Later',g.later);
 }
 
 function gradeInfo(modId){
@@ -763,6 +819,13 @@ document.addEventListener('click',function(e){
     case 'nextMonth':S.calMonth=new Date(S.calMonth.getFullYear(),S.calMonth.getMonth()+1,1);render();break;
     case 'thisMonth':S.calMonth=startOfMonth(new Date());S.selDay=ymd(new Date());render();break;
     case 'selDay':S.selDay=t.dataset.day;render();break;
+    case 'trackTab':S.trackTab=t.dataset.key;render();break;
+    case 'showAllDone':S.doneAll=true;render();break;
+    case 'data':dataDialog();break;
+    case 'setStatus':
+      var itm=itemById(id);if(!itm)break;
+      itm.status=t.dataset.st;save();render();
+      toast(t.dataset.st==='doing'?'Moved to Doing':t.dataset.st==='todo'?'Moved to To do':'Moved to Done');break;
     case 'toggleType':if(S.types[t.dataset.type])delete S.types[t.dataset.type];else S.types[t.dataset.type]=true;render();break;
     case 'clearTypes':S.types={};render();break;
     case 'clearFilters':S.types={};S.modFilter='all';render();break;
@@ -790,6 +853,18 @@ document.addEventListener('change',function(e){
 });
 document.getElementById('addBtn').addEventListener('click',addMenu);
 document.getElementById('dataBtn').addEventListener('click',dataDialog);
+
+var menu=document.getElementById('menu'),menuBtn=document.getElementById('menuBtn');
+function setMenu(open){
+  menu.hidden=!open;
+  menuBtn.setAttribute('aria-expanded',open?'true':'false');
+  menuBtn.setAttribute('aria-label',open?'Close menu':'Open menu');
+  document.getElementById('menuIcon').setAttribute('d',open?'M5 5l14 14M19 5L5 19':'M3 6h18M3 12h18M3 18h18');
+}
+menuBtn.addEventListener('click',function(){setMenu(menu.hidden);});
+menu.addEventListener('click',function(e){if(e.target.closest('button'))setMenu(false);});
+document.addEventListener('click',function(e){if(!menu.hidden&&!e.target.closest('.top'))setMenu(false);});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!menu.hidden){setMenu(false);menuBtn.focus();}});
 
 var lastDay=ymd(new Date());
 function refreshIfStale(force){
