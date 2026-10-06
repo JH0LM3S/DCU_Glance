@@ -230,15 +230,24 @@ function dateStr(due,withYear){
   var o={weekday:'short',day:'numeric',month:'short'}; if(withYear)o.year='numeric';
   return d.toLocaleDateString('en-GB',o);
 }
-function rel(it){
-  var dd=dayDiff(it.due), now=new Date(), due=new Date(it.due);
+function rel(it,day){
+  var now=new Date(),dd=dayDiff(it.due),due=new Date(it.due);
   if(isDone(it))return {txt:STATUS[it.status],cls:'ok'};
-  if(due<now && dd===0)return {txt:'Overdue, was due '+timeStr(it.due),cls:'bad'};
+  if(day&&day!==ymd(now)){
+    var dueDay=it.due.slice(0,10);
+    if(day===dueDay)return due<now?{txt:'Was due '+timeStr(it.due),cls:'bad'}:{txt:'Due '+timeStr(it.due),cls:'warn'};
+    if(day<dueDay)return {txt:'Open, due '+dateStr(it.due)+' '+timeStr(it.due),cls:''};
+  }
+  var rng=isRange(it);
+  if(rng&&now<new Date(it.start)){
+    var sd=dayDiff(it.start);
+    return {txt:'Opens '+(sd<=0?'today '+timeStr(it.start):sd===1?'tomorrow':'in '+sd+' days'),cls:''};
+  }
+  if(due<now&&dd===0)return {txt:'Overdue, was due '+timeStr(it.due),cls:'bad'};
   if(dd<0)return {txt:'Overdue by '+(-dd)+(dd===-1?' day':' days'),cls:'bad'};
   if(dd===0)return {txt:'Due today '+timeStr(it.due),cls:'warn'};
   if(dd===1)return {txt:'Due tomorrow '+timeStr(it.due),cls:'warn'};
-  if(dd<=3)return {txt:'In '+dd+' days',cls:'warn'};
-  return {txt:'In '+dd+' days',cls:''};
+  return {txt:(rng?'Open, due in ':'In ')+dd+' days',cls:dd<=3?'warn':''};
 }
 function sortByDue(a,b){return new Date(a.due)-new Date(b.due);}
 function visible(){
@@ -310,12 +319,12 @@ function emptyState(){
   '<div class="actions"><button class="btn primary" data-act="addModule">Add a module</button><button class="btn" data-act="import">Import from Loop calendar</button><button class="btn ghost" data-act="sample">Try with sample data</button></div></div>';
 }
 
-function itemRow(it,showDate){
-  var r=rel(it);
+function itemRow(it,showDate,day){
+  var r=rel(it,day);
   return '<div class="row"><span class="swatch" style="background:'+colorOf(it)+'"></span>'+
     '<button class="check'+(isDone(it)?' on':'')+'" data-act="toggle" data-id="'+it.id+'" aria-label="'+(isDone(it)?'Mark as to do':'Mark as submitted')+': '+esc(it.title)+'">&#10003;</button>'+
     '<button class="main" data-act="editItem" data-id="'+it.id+'"><div class="title">'+esc(it.title)+'</div>'+
-    '<div class="meta">'+esc(modName(it))+' &middot; '+TYPES[it.type||'other']+(it.weight?' &middot; '+esc(it.weight)+'%':'')+(isRange(it)?' &middot; '+rangeStr(it):(showDate?' &middot; '+dateStr(it.due)+' '+timeStr(it.due):''))+'</div></button>'+
+    '<div class="meta">'+esc(modName(it))+' &middot; '+TYPES[it.type||'other']+(it.weight?' &middot; '+esc(it.weight)+'%':'')+(isRange(it)?' &middot; '+rangeStr(it):(showDate?' &middot; '+dateStr(it.due)+' '+timeStr(it.due):''))+(it.missing?' '+FLAG:'')+'</div></button>'+
     '<span class="pill '+r.cls+'">'+r.txt+'</span></div>';
 }
 
@@ -384,7 +393,7 @@ function viewPlanner(){
   var sel=(byDay[S.selDay]||[]).slice().sort(sortByDue);
   var sd=new Date(S.selDay+'T12:00');
   h+='<section class="dayitems"><h2 style="font-size:20px;margin-bottom:10px">'+sd.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})+'</h2>';
-  if(sel.length)h+=sel.map(function(i){return itemRow(i,false);}).join('');
+  if(sel.length)h+=sel.map(function(i){return itemRow(i,false,S.selDay);}).join('');
   else h+='<div class="empty" style="padding:18px"><p style="margin:0 0 10px">Nothing due this day.</p><button class="btn small" data-act="addOnDay">Add something for this day</button></div>';
   h+='</section>';
   return h;
@@ -400,7 +409,7 @@ function viewTracker(){
       var r=rel(it);
       var so=Object.keys(STATUS).map(function(k){return '<option value="'+k+'"'+(it.status===k?' selected':'')+'>'+STATUS[k]+'</option>';}).join('');
       return '<div class="card" style="--c:'+colorOf(it)+'"><button class="title" data-act="editItem" data-id="'+it.id+'">'+esc(it.title)+'</button>'+
-        '<div class="meta">'+esc(modName(it))+' &middot; '+(isRange(it)?rangeStr(it):dateStr(it.due))+(it.status==='graded'&&it.mark!==''&&it.mark!=null?' &middot; '+esc(it.mark)+'%':'')+'</div>'+
+        '<div class="meta">'+esc(modName(it))+' &middot; '+(isRange(it)?rangeStr(it):dateStr(it.due))+(it.status==='graded'&&it.mark!==''&&it.mark!=null?' &middot; '+esc(it.mark)+'%':'')+(it.missing?' '+FLAG:'')+'</div>'+
         (!isDone(it)?'<div style="margin-bottom:8px"><span class="pill '+r.cls+'">'+r.txt+'</span></div>':'')+
         '<select class="statusSel" data-id="'+it.id+'" aria-label="Status for '+esc(it.title)+'">'+so+'</select></div>';
     }).join('')||'<p class="hint" style="margin:4px">Nothing here.</p>';
@@ -447,7 +456,7 @@ function itemDialog(id,defaults){
   var it=id?itemById(id):Object.assign({moduleId:S.modules[0].id,type:'assignment',status:'todo',weight:'',mark:'',notes:'',title:'',due:ymd(new Date())+'T23:59'},defaults||{});
   var typeOpts=Object.keys(TYPES).map(function(k){return '<option value="'+k+'"'+(it.type===k?' selected':'')+'>'+TYPES[k]+'</option>';}).join('');
   var stOpts=Object.keys(STATUS).map(function(k){return '<option value="'+k+'"'+(it.status===k?' selected':'')+'>'+STATUS[k]+'</option>';}).join('');
-  openDlg('<h2>'+(id?'Edit work':'Add work')+'</h2>'+
+  openDlg('<h2>'+(id?'Edit work':'Add work')+'</h2>'+(it.missing?'<p class="hint">'+FLAG+' It was in an earlier Loop import but not the latest one, so it may have been removed or moved. Saving this clears the flag.</p>':'')+
    '<div class="field"><label for="fTitle">Title</label><input type="text" id="fTitle" value="'+esc(it.title)+'" placeholder="e.g. Essay 1"></div>'+
    '<div class="two"><div class="field"><label for="fMod">Module</label><select id="fMod">'+modOptions(it.moduleId)+'</select></div>'+
    '<div class="field"><label for="fType">Type</label><select id="fType">'+typeOpts+'</select></div></div>'+
@@ -464,7 +473,7 @@ function saveItem(id){
   var due=document.getElementById('fDue').value;
   if(!title){toast('Add a title');return;}
   if(!due){toast('Choose a due date');return;}
-  var data={title:title,start:(function(){var st=document.getElementById('fStart').value;return st&&st<due?st:'';})(),moduleId:document.getElementById('fMod').value,type:document.getElementById('fType').value,due:due,
+  var data={missing:false,title:title,start:(function(){var st=document.getElementById('fStart').value;return st&&st<due?st:'';})(),moduleId:document.getElementById('fMod').value,type:document.getElementById('fType').value,due:due,
     weight:document.getElementById('fW').value,status:document.getElementById('fSt').value,mark:document.getElementById('fMark').value,notes:document.getElementById('fNotes').value};
   if(id){Object.assign(itemById(id),data);}
   else{data.id=uid();S.items.push(data);}
@@ -512,7 +521,7 @@ function importDialog(){
    '<p class="hint">In Loop, open Calendar, choose Import or export calendars, then Export. Pick "All" events and a time range, then download the .ics file and choose it here. You can also paste the file contents.</p>'+
    '<div class="field"><label for="icsFile">Calendar file (.ics)</label><input type="file" id="icsFile" accept=".ics,text/calendar"></div>'+
    '<div class="field"><label for="icsText">Or paste the contents</label><textarea id="icsText" placeholder="BEGIN:VCALENDAR..."></textarea></div>'+
-   '<p class="hint">New modules are created from the course names in the file. Items already imported are skipped, so you can re-import any time.</p>'+
+   '<p class="hint">New modules are created from the course names in the file. Re-importing is safe: changed dates are updated, your status and marks are kept, and anything that has disappeared from Loop is flagged, not deleted.</p>'+
    '<div class="foot"><div class="r"><button class="btn" data-act="closeDlg">Cancel</button><button class="btn primary" data-act="runImport">Import</button></div></div>');
   document.getElementById('icsFile').addEventListener('change',function(e){
     var f=e.target.files[0];if(!f)return;
@@ -568,16 +577,16 @@ function findMod(name){
   for(var i=0;i<S.modules.length;i++)if(S.modules[i].name.toLowerCase()===n)return S.modules[i];
   return null;
 }
+function whenStr(st,due){return (st&&st.slice(0,10)<due.slice(0,10))?dateStr(st)+' to '+dateStr(due):dateStr(due)+' '+timeStr(due);}
+var FLAG='<span class="pill warn">Not in latest import</span>';
 function runImport(){
   var text=document.getElementById('icsText').value;
   if(!/BEGIN:VCALENDAR/i.test(text)){toast('That does not look like a calendar file');return;}
-  var evs=parseICS(text),known={},skipped=0,entries=[];
-  S.items.forEach(function(i){uidsOf(i).forEach(function(u){known[u]=true;});});
+  var evs=parseICS(text),entries=[],fMin=null,fMax=null;
   evs.forEach(function(ev){
     var title=(ev.SUMMARY||'').trim(),sD=parseDT(ev.DTSTART);
     if(!sD||!title)return;
     var id=ev.UID||(title+'|'+ev.DTSTART);
-    if(known[id]){skipped++;return;}
     var allDay=/^\d{8}$/.test(ev.DTSTART),st=sD,en=sD;
     if(ev.DTEND){
       var eD=parseDT(ev.DTEND);
@@ -588,38 +597,79 @@ function runImport(){
         }else if(startOfDay(eD)>startOfDay(sD)){en=eD;}
       }
     }
+    if(!fMin||st<fMin)fMin=st;
+    if(!fMax||en>fMax)fMax=en;
     var course=(ev.CATEGORIES||'General').split(',')[0].trim()||'General';
     var cleaned=title.replace(/\s+(is due|closes|opens|is due to be handed in)$/i,'').trim()||title;
     entries.push({key:course.toLowerCase()+'|'+normTitle(title),norm:normTitle(title),s:st,e:en,id:id,raw:title,cleaned:cleaned,course:course,desc:ev.DESCRIPTION||''});
   });
-  var clusters=clusterEntries(entries),added=0,merged=0,newMods=0;
+  var clusters=clusterEntries(entries),touched={};
+  var r={added:0,merged:0,newMods:0,changed:[],renamed:0,missing:[],total:clusters.length};
   clusters.forEach(function(c){
     var first=c.members[0],mod=findMod(first.course);
-    if(!mod){mod={id:uid(),name:first.course,code:'',lecturer:'',url:'',color:COLORS[S.modules.length%COLORS.length]};S.modules.push(mod);newMods++;}
-    var ids=c.members.map(function(m){return m.id;});
-    var match=null;
-    S.items.forEach(function(it){
-      if(match||it.moduleId!==mod.id||normTitle(it.title)!==first.norm)return;
-      var is=new Date(startOf(it)),ie=new Date(it.due);
-      if((c.s-ie)/86400000<=5&&(is-c.e)/86400000<=5)match=it;
-    });
-    var extra=c.members.length-1;
-    if(match){
-      var ms=new Date(Math.min(new Date(startOf(match)),c.s)),me=new Date(Math.max(new Date(match.due),c.e));
-      match.start=ymd(ms)===ymd(me)?'':toLocalStr(ms);
-      match.due=toLocalStr(me);
-      match.uids=uidsOf(match).concat(ids);
-      merged+=c.members.length;
+    if(!mod){mod={id:uid(),name:first.course,code:'',lecturer:'',url:'',color:COLORS[S.modules.length%COLORS.length]};S.modules.push(mod);r.newMods++;}
+    var ids=c.members.map(function(m){return m.id;}),it=null,i;
+    for(i=0;i<S.items.length&&!it;i++){
+      var x=S.items[i];if(touched[x.id])continue;
+      if(uidsOf(x).some(function(u){return ids.indexOf(u)>=0;}))it=x;
+    }
+    if(!it){
+      S.items.forEach(function(x){
+        if(it||touched[x.id]||x.moduleId!==mod.id||normTitle(x.title)!==first.norm)return;
+        var is=new Date(startOf(x)),ie=new Date(x.due);
+        if((c.s-ie)/86400000<=5&&(is-c.e)/86400000<=5)it=x;
+      });
+    }
+    var sameDay=ymd(c.s)===ymd(c.e),nStart=sameDay?'':toLocalStr(c.s),nDue=toLocalStr(c.e);
+    if(it){
+      touched[it.id]=true;
+      var oStart=isRange(it)?it.start:'';
+      if(oStart!==nStart||it.due!==nDue){
+        r.changed.push({title:it.title,mod:modName(it),from:whenStr(oStart,it.due),to:whenStr(nStart,nDue)});
+        it.start=nStart;it.due=nDue;
+      }
+      var unrenamed=it.srcTitle?it.title===it.srcTitle:it.title===first.cleaned;
+      if(unrenamed){if(it.title!==first.cleaned)r.renamed++;it.title=first.cleaned;it.srcTitle=first.cleaned;}
+      var us=uidsOf(it);ids.forEach(function(u){if(us.indexOf(u)<0)us.push(u);});
+      it.uids=us;it.missing=false;
     }else{
-      var sameDay=ymd(c.s)===ymd(c.e);
       var desc='';c.members.forEach(function(m){if(!desc&&m.desc)desc=m.desc;});
-      S.items.push({id:uid(),uid:ids[0],uids:ids,title:first.cleaned,moduleId:mod.id,type:guessType(c.members.map(function(m){return m.raw;}).join(' ')),
-        start:sameDay?'':toLocalStr(c.s),due:toLocalStr(c.e),weight:'',status:'todo',mark:'',notes:desc.slice(0,160)});
-      added++;merged+=extra;
+      var ni={id:uid(),uid:ids[0],uids:ids,title:first.cleaned,srcTitle:first.cleaned,moduleId:mod.id,type:guessType(c.members.map(function(m){return m.raw;}).join(' ')),
+        start:nStart,due:nDue,weight:'',status:'todo',mark:'',notes:desc.slice(0,160)};
+      S.items.push(ni);touched[ni.id]=true;r.added++;r.merged+=c.members.length-1;
     }
   });
-  save();closeDlg();render();
-  toast('Added '+added+(added===1?' item':' items')+(merged?', merged '+merged+' duplicate'+(merged===1?'':'s')+' or range days':'')+(newMods?', '+newMods+' new modules':'')+(skipped?', '+skipped+' already there':''));
+  if(fMin&&fMax){
+    S.items.forEach(function(it){
+      if(touched[it.id]||!uidsOf(it).length||isDone(it))return;
+      var d=new Date(it.due);
+      if(d>=fMin&&d<=fMax&&!it.missing){it.missing=true;r.missing.push({title:it.title,mod:modName(it),when:whenStr(isRange(it)?it.start:'',it.due)});}
+    });
+  }
+  save();render();importSummary(r);
+}
+function importSummary(r){
+  var h='<h2>Import finished</h2>',any=r.added||r.changed.length||r.missing.length||r.merged||r.renamed||r.newMods;
+  if(!r.total){h+='<p class="hint">No events were found in that file.</p>';}
+  else if(!any){h+='<p class="hint">Everything was already up to date.</p>';}
+  else{
+    var bits=[];
+    if(r.added)bits.push(r.added+(r.added===1?' new item':' new items')+' added');
+    if(r.newMods)bits.push(r.newMods+(r.newMods===1?' new module':' new modules'));
+    if(r.merged)bits.push(r.merged+' duplicate'+(r.merged===1?'':'s')+' or range day'+(r.merged===1?'':'s')+' merged');
+    if(r.renamed)bits.push(r.renamed+(r.renamed===1?' title':' titles')+' updated');
+    if(bits.length)h+='<p style="margin:0">'+bits.join('. ')+'.</p>';
+  }
+  if(r.changed.length){
+    h+='<div><b>Dates changed in Loop ('+r.changed.length+')</b><p class="hint">Updated here to match. Your status, marks and notes were kept.</p><div class="dupelist">'+
+      r.changed.map(function(c){return '<div class="dupe"><b>'+esc(c.title)+' ('+esc(c.mod)+')</b>'+esc(c.from)+' &rarr; '+esc(c.to)+'</div>';}).join('')+'</div></div>';
+  }
+  if(r.missing.length){
+    h+='<div><b>Not in this file ('+r.missing.length+')</b><p class="hint">These came from an earlier import but are missing now. They may have been removed or moved. They are marked in your list so you can check, and nothing was deleted.</p><div class="dupelist">'+
+      r.missing.map(function(c){return '<div class="dupe"><b>'+esc(c.title)+' ('+esc(c.mod)+')</b>Was '+esc(c.when)+'</div>';}).join('')+'</div></div>';
+  }
+  h+='<div class="foot"><div class="r"><button class="btn primary" data-act="closeDlg">Done</button></div></div>';
+  openDlg(h);
 }
 
 var STORDER={todo:0,doing:1,submitted:2,graded:3};
@@ -740,6 +790,23 @@ document.addEventListener('change',function(e){
 });
 document.getElementById('addBtn').addEventListener('click',addMenu);
 document.getElementById('dataBtn').addEventListener('click',dataDialog);
+
+var lastDay=ymd(new Date());
+function refreshIfStale(force){
+  if(dlg.open)return;
+  var ae=document.activeElement;
+  if(ae&&/^(SELECT|INPUT|TEXTAREA)$/.test(ae.tagName))return;
+  var t=ymd(new Date());
+  if(t!==lastDay){
+    if(S.selDay===lastDay){S.selDay=t;S.calMonth=startOfMonth(new Date());}
+    lastDay=t;force=true;
+  }
+  if(force)render();
+}
+document.addEventListener('visibilitychange',function(){if(!document.hidden)refreshIfStale(true);});
+window.addEventListener('focus',function(){refreshIfStale(true);});
+window.addEventListener('pageshow',function(){refreshIfStale(true);});
+setInterval(function(){refreshIfStale(false);},60000);
 
 load();render();
 })();
