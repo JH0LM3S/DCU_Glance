@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>College planner</title>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Planner">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0c426c">
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACpUlEQVR42u3dMU7zMBiA4TbKwAADB+EScBY2kDgKUkfO0lNwEIYuDAwMLJUoqlNsx5/9PBP6ifIn6ds0Soy7vb5/2sApk0OAOBAH4kAciANxIA7EgTgQB4gDcSAOxIE4EAfiQByIA3GAOBAHw8Rx2O8O+93xD7a5nDlQFn/9483Ds2125kAcaW/BxN/aZmcOxIE4EAfiQBx0pshNsI/Xz6Ib/Xv9pf/HENt8+3LlzIGPFcSBOBAH4kAciAPEQYdxfL0/Xvxb2+zMQX5hBhj/vNXmu7dA77+I23xsW+IrNdp/DNYlD95wzYE4EAfiQByIA3GAOBAH4kAciANxIA76UGmwT/ahBlQYNOPMgTgQB+JAHIgDcSAOxIE4GNf6fyt79sslLvjempHX2c+ZI+VrR5Z+NcnI6+wnjvQ9t6RrDlyQIg7EgTgQB4gDcRA0jvR7w5Yc8cyRsudLj87I68yr0jyk/m4l4kF2zYE4EAfiQByIA3EgDnph9Hmqs5OlXHAPyujzfx2dTRujulOm0Vk61Y7R53n2fN0l01/19CWNPscFKeJAHCAOxIE4EAeDxBFlVHf6ffH0JY0+z7PnLYzqTnnVlz5baX/0+foP3krsf4l1lhhAv+5r75oDcSAOxIE4EAfiQBwMw+jz3tbZz5nD3Od519lPHGY0z7ukaw7EgTgQB+JAHIgDcUCDcZjRPO+SvZ05zH3ebBkbc5/HZe5zXJAiDsSBOBAH4gBxIA7CxLF0XnBaOJ5F4jh5H1cfRcso8YBi7q93Wv9Y8aStpkJHewq3xVQ7zlPQ7abCEZ5Cb70yiq5/rrYPrkbDveXmzvaHSB8riANxIA4QB+JAHIgDcSAOxIE4EAfiQBwgDsSBOBAH4kAciANxIA7EAeJAHIgDcSAOmvENqvMorxL6gJYAAAAASUVORK5CYII=">
+<link rel="icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAIAAACyr5FlAAACpUlEQVR42u3dMU7zMBiA4TbKwAADB+EScBY2kDgKUkfO0lNwEIYuDAwMLJUoqlNsx5/9PBP6ifIn6ds0Soy7vb5/2sApk0OAOBAH4kAciANxIA7EgTgQB4gDcSAOxIE4EAfiQByIA3GAOBAHw8Rx2O8O+93xD7a5nDlQFn/9483Ds2125kAcaW/BxN/aZmcOxIE4EAfiQBx0pshNsI/Xz6Ib/Xv9pf/HENt8+3LlzIGPFcSBOBAH4kAciAPEQYdxfL0/Xvxb2+zMQX5hBhj/vNXmu7dA77+I23xsW+IrNdp/DNYlD95wzYE4EAfiQByIA3GAOBAH4kAciANxIA76UGmwT/ahBlQYNOPMgTgQB+JAHIgDcSAOxIE4GNf6fyt79sslLvjempHX2c+ZI+VrR5Z+NcnI6+wnjvQ9t6RrDlyQIg7EgTgQB4gDcRA0jvR7w5Yc8cyRsudLj87I68yr0jyk/m4l4kF2zYE4EAfiQByIA3EgDnph9Hmqs5OlXHAPyujzfx2dTRujulOm0Vk61Y7R53n2fN0l01/19CWNPscFKeJAHCAOxIE4EAeDxBFlVHf6ffH0JY0+z7PnLYzqTnnVlz5baX/0+foP3krsf4l1lhhAv+5r75oDcSAOxIE4EAfiQBwMw+jz3tbZz5nD3Od519lPHGY0z7ukaw7EgTgQB+JAHIgDcUCDcZjRPO+SvZ05zH3ebBkbc5/HZe5zXJAiDsSBOBAH4gBxIA7CxLF0XnBaOJ5F4jh5H1cfRcso8YBi7q93Wv9Y8aStpkJHewq3xVQ7zlPQ7abCEZ5Cb70yiq5/rrYPrkbDveXmzvaHSB8riANxIA4QB+JAHIgDcSAOxIE4EAfiQBwgDsSBOBAH4kAciANxIA7EAeJAHIgDcSAOmvENqvMorxL6gJYAAAAASUVORK5CYII=">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#edf2f8; --surface:#ffffff; --surface2:#f2f6fb; --ink:#0b2540; --muted:#52667f; --line:#d0dae7;
+  --brand:#0c426c; --on-brand:#ffffff; --gold:#fbd264; --on-gold:#2a1f00; --gold-line:#d9a928;
+  --accent:#0c426c; --focus:#0c426c;
+  --bad:#b4231f; --bad-bg:#fdecea; --warn:#8a4100; --warn-bg:#fff1d6; --ok:#17703a; --ok-bg:#e6f5ec;
+  --display:'Bricolage Grotesque','Segoe UI',system-ui,sans-serif; --body:'Figtree','Segoe UI',system-ui,-apple-system,sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#06172a; --surface:#0e2540; --surface2:#133052; --ink:#eaf1fa; --muted:#9db4cf; --line:#234666;
+    --brand:#0a3358; --gold-line:#fbd264; --accent:#fbd264; --focus:#fbd264;
+    --bad:#ff8f89; --bad-bg:#3a1b1d; --warn:#ffc978; --warn-bg:#3a2b12; --ok:#6fd397; --ok-bg:#15301f;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#06172a; --surface:#0e2540; --surface2:#133052; --ink:#eaf1fa; --muted:#9db4cf; --line:#234666;
+  --brand:#0a3358; --gold-line:#fbd264; --accent:#fbd264; --focus:#fbd264;
+  --bad:#ff8f89; --bad-bg:#3a1b1d; --warn:#ffc978; --warn-bg:#3a2b12; --ok:#6fd397; --ok-bg:#15301f;
+}
+html{height:100%;scroll-padding-top:calc(env(safe-area-inset-top,0px) + 64px)}
+*,*::before,*::after{box-sizing:inherit}
+body{margin:0;min-height:100%;background:var(--bg);color:var(--ink);font-family:var(--body);font-size:16px;line-height:1.5}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:3px solid var(--focus);outline-offset:2px;border-radius:6px}
+.top :focus-visible{outline-color:var(--gold)}
+.wrap{max-width:1040px;margin:0 auto;padding:0 16px 48px}
+h1,h2,h3{font-family:var(--display);margin:0;line-height:1.15}
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--brand);border-bottom:4px solid var(--gold)}
+.top-in{max-width:1040px;margin:0 auto;padding:10px 16px;display:flex;align-items:center;gap:12px;justify-content:space-between}
+.tabs{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:0;background:transparent;padding:8px 14px;border-radius:999px;font-weight:600;color:rgba(255,255,255,.85);white-space:nowrap}
+.tab[aria-selected="true"]{background:var(--gold);color:var(--on-gold)}
+.iconbtn{border:1px solid rgba(255,255,255,.55);background:transparent;color:#fff;border-radius:999px;padding:8px 14px;font-weight:600;white-space:nowrap}
+.btn{border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 14px;font-weight:600}
+.btn.primary{background:var(--gold);color:var(--on-gold);border-color:var(--gold-line)}
+.btn.danger{color:var(--bad);border-color:var(--bad)}
+.btn.small{padding:5px 10px;font-size:14px;border-radius:8px}
+.btn.ghost{background:transparent}
+
+/* hero */
+.hero{padding:28px 0 20px}
+.hero .date{color:var(--muted);font-weight:500;margin:0 0 6px}
+.hero h1{font-size:clamp(28px,6vw,46px);letter-spacing:-.02em;max-width:22ch}
+.hero .sub{color:var(--muted);margin:10px 0 0}
+.next{margin-top:18px;display:flex;gap:14px;align-items:stretch;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+.next .bar{width:8px;flex:none}
+.next .body{padding:14px 16px 14px 4px;flex:1;min-width:0}
+.next .t{font-family:var(--display);font-size:20px;font-weight:700;overflow-wrap:anywhere}
+.next .m{color:var(--muted);font-size:15px}
+.pill{display:inline-block;padding:2px 10px;border-radius:999px;font-size:13px;font-weight:600;background:var(--surface2);border:1px solid var(--line);white-space:nowrap}
+.pill.bad{background:var(--bad-bg);color:var(--bad);border-color:transparent}
+.pill.warn{background:var(--warn-bg);color:var(--warn);border-color:transparent}
+.pill.ok{background:var(--ok-bg);color:var(--ok);border-color:transparent}
+
+/* lists */
+.group{margin-top:26px}
+.group>h2{font-size:20px;margin-bottom:10px;display:flex;align-items:baseline;gap:10px}
+.group>h2 .count{color:var(--muted);font-family:var(--body);font-size:15px;font-weight:500}
+.row{display:flex;gap:12px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px}
+.row .swatch{width:6px;align-self:stretch;border-radius:3px;flex:none}
+.row .main{flex:1;min-width:0;cursor:pointer;text-align:left;background:none;border:0;padding:0}
+.row .title{font-weight:600;overflow-wrap:anywhere}
+.row .meta{color:var(--muted);font-size:14px}
+.check{width:26px;height:26px;border-radius:8px;border:2px solid var(--muted);background:transparent;flex:none;display:grid;place-items:center;padding:0;color:transparent;font-weight:700}
+.check:hover{border-color:var(--accent);color:var(--accent)}
+.check.on{background:var(--ok);border-color:var(--ok);color:#fff}
+.empty{border:2px dashed var(--line);border-radius:14px;padding:28px 18px;text-align:center;color:var(--muted)}
+.empty h3{color:var(--ink);font-size:20px;margin-bottom:6px}
+.empty .actions{margin-top:14px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* planner */
+.cal-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:22px 0 10px;flex-wrap:wrap}
+.cal-head h2{font-size:24px}
+.cal-nav{display:flex;gap:6px}
+.cal{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+.dow{font-size:13px;color:var(--muted);font-weight:600;text-align:center;padding:4px 0}
+.day{min-height:64px;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:6px 6px 4px;text-align:left;display:flex;flex-direction:column;gap:4px;align-items:flex-start}
+.day.out{opacity:.45}
+.day.today{border:2px solid var(--accent)}
+.day.sel{background:var(--surface2);box-shadow:inset 0 0 0 2px var(--ink)}
+.day .n{font-weight:600;font-size:14px}
+.dots{display:flex;flex-wrap:wrap;gap:3px}
+.dot{width:9px;height:9px;border-radius:50%}
+.dayitems{margin-top:18px}
+.chip{display:none}
+@media (min-width:700px){
+  .day{min-height:92px}
+  .chip{display:block;font-size:12px;line-height:1.25;padding:2px 5px;border-radius:5px;background:var(--surface2);border-left:4px solid var(--c);width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .dots{display:none}
+}
+
+/* tracker */
+.filters{display:flex;gap:10px;align-items:center;margin:22px 0 12px;flex-wrap:wrap}
+select,input[type=text],input[type=url],input[type=number],input[type=datetime-local],textarea{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:9px 10px;width:100%;min-height:42px}
+.filters select{width:auto;min-width:200px}
+.board{display:grid;gap:14px;grid-template-columns:1fr}
+@media (min-width:760px){.board{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.col{background:var(--surface2);border:1px solid var(--line);border-radius:14px;padding:10px}
+.col h3{font-size:17px;margin:2px 4px 10px;display:flex;justify-content:space-between}
+.col h3 span{color:var(--muted);font-family:var(--body);font-weight:500}
+.card{background:var(--surface);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:10px;padding:9px 10px;margin-bottom:8px}
+.card .title{font-weight:600;overflow-wrap:anywhere;background:none;border:0;padding:0;text-align:left;width:100%}
+.card .meta{color:var(--muted);font-size:13px;margin:2px 0 8px}
+.card select{min-height:36px;padding:5px 8px;font-size:14px}
+
+/* modules */
+.grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));margin-top:18px}
+.mod{background:var(--surface);border:1px solid var(--line);border-top:8px solid var(--c);border-radius:14px;padding:14px}
+.mod h3{font-size:20px;overflow-wrap:anywhere}
+.mod .code{color:var(--muted);font-size:14px;margin:2px 0 10px}
+.prog{height:8px;background:var(--surface2);border:1px solid var(--line);border-radius:99px;overflow:hidden;margin:6px 0 4px}
+.prog>i{display:block;height:100%;background:var(--c)}
+.kv{display:flex;justify-content:space-between;gap:8px;font-size:15px;margin:4px 0}
+.kv span:first-child{color:var(--muted)}
+.mod .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.mod a{color:var(--accent);font-weight:600}
+
+.next{border-top:4px solid var(--gold)}
+.fbar{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:20px 0 4px}
+.fchip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-weight:600;font-size:14px;display:inline-flex;gap:6px;align-items:center}
+.fchip span{color:var(--muted);font-weight:500}
+.fchip[aria-pressed="true"]{background:var(--gold);color:var(--on-gold);border-color:var(--gold-line)}
+.fchip[aria-pressed="true"] span{color:var(--on-gold)}
+.fbar select{width:auto;min-width:170px;min-height:36px;padding:5px 10px;font-size:14px}
+.chip.span{opacity:.6;border-left-style:dashed}
+.dot.span{opacity:.4}
+.dupelist{display:flex;flex-direction:column;gap:6px;max-height:280px;overflow:auto}
+.dupe{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:8px 10px;font-size:14px}
+.dupe b{display:block}
+/* dialog */
+dialog{border:1px solid var(--line);border-radius:16px;background:var(--surface);color:var(--ink);padding:0;width:min(520px,calc(100vw - 24px));max-height:calc(100dvh - 24px)}
+dialog::backdrop{background:rgba(8,14,28,.55)}
+.dlg{padding:18px;display:flex;flex-direction:column;gap:12px}
+.dlg h2{font-size:22px}
+.field label{display:block;font-weight:600;font-size:14px;margin-bottom:4px}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.dlg .foot{display:flex;gap:8px;justify-content:space-between;flex-wrap:wrap;margin-top:6px}
+.dlg .foot .r{display:flex;gap:8px;margin-left:auto}
+.hint{color:var(--muted);font-size:14px;margin:0}
+textarea{min-height:110px;font-family:ui-monospace,Menlo,monospace;font-size:13px}
+.swatches{display:flex;gap:8px;flex-wrap:wrap}
+.sw{width:30px;height:30px;border-radius:50%;border:3px solid transparent;background:var(--c);padding:0}
+.sw[aria-pressed="true"]{border-color:var(--ink)}
+.toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 18px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-weight:600;z-index:20;max-width:calc(100vw - 32px)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<div class="top"><div class="top-in">
+  <div class="tabs" role="tablist" aria-label="Views" id="tabs"></div>
+  <div style="display:flex;gap:8px">
+    <button class="iconbtn" id="addBtn">Add</button>
+    <button class="iconbtn" id="dataBtn" aria-label="Import and backup">Data</button>
+  </div>
+</div></div>
+<main class="wrap" id="app"></main>
+<dialog id="dlg"></dialog>
+<div id="toastHost"></div>
+
+<script>
+(function(){
+'use strict';
+var KEY='collegePlanner.v1';
+var COLORS=['#1f6fb8','#d99a00','#0f8f7d','#c2255c','#8e2fb0','#d0510f','#4a7c0f','#0b7fa6'];
+var TYPES={assignment:'Assignment',exam:'Exam',quiz:'Quiz or test',project:'Project',reading:'Reading',other:'Other'};
+var STATUS={todo:'To do',doing:'In progress',submitted:'Submitted',graded:'Graded'};
+var memoryFallback=null;
+
+var S={modules:[],items:[],tab:'glance',calMonth:startOfMonth(new Date()),selDay:ymd(new Date()),modFilter:'all',types:{},confirm:null};
+
+/* ---------- storage ---------- */
+function load(){
+  try{
+    var raw=localStorage.getItem(KEY);
+    if(raw){var d=JSON.parse(raw);S.modules=d.modules||[];S.items=d.items||[];}
+  }catch(e){ if(memoryFallback){S.modules=memoryFallback.modules;S.items=memoryFallback.items;} }
+}
+function save(){
+  var d={modules:S.modules,items:S.items};
+  memoryFallback=d;
+  try{localStorage.setItem(KEY,JSON.stringify(d));}catch(e){}
+}
+
+/* ---------- helpers ---------- */
+function esc(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c];});}
+function pad(n){return n<10?'0'+n:''+n;}
+function ymd(d){return d.getFullYear()+'-'+pad(d.getMonth()+1)+'-'+pad(d.getDate());}
+function toLocalStr(d){return ymd(d)+'T'+pad(d.getHours())+':'+pad(d.getMinutes());}
+function startOfDay(d){return new Date(d.getFullYear(),d.getMonth(),d.getDate());}
+function startOfMonth(d){return new Date(d.getFullYear(),d.getMonth(),1);}
+function uid(){return 'i'+Date.now().toString(36)+Math.random().toString(36).slice(2,7);}
+function modById(id){for(var i=0;i<S.modules.length;i++)if(S.modules[i].id===id)return S.modules[i];return null;}
+function itemById(id){for(var i=0;i<S.items.length;i++)if(S.items[i].id===id)return S.items[i];return null;}
+function colorOf(it){var m=modById(it.moduleId);return m?m.color:'#6b7a90';}
+function modName(it){var m=modById(it.moduleId);return m?m.name:'No module';}
+function isDone(it){return it.status==='submitted'||it.status==='graded';}
+function dayDiff(due){
+  var a=startOfDay(new Date(due)),b=startOfDay(new Date());
+  return Math.round((a-b)/86400000);
+}
+function timeStr(due){var d=new Date(due);return pad(d.getHours())+':'+pad(d.getMinutes());}
+function dateStr(due,withYear){
+  var d=new Date(due);
+  var o={weekday:'short',day:'numeric',month:'short'}; if(withYear)o.year='numeric';
+  return d.toLocaleDateString('en-GB',o);
+}
+function rel(it){
+  var dd=dayDiff(it.due), now=new Date(), due=new Date(it.due);
+  if(isDone(it))return {txt:STATUS[it.status],cls:'ok'};
+  if(due<now && dd===0)return {txt:'Overdue, was due '+timeStr(it.due),cls:'bad'};
+  if(dd<0)return {txt:'Overdue by '+(-dd)+(dd===-1?' day':' days'),cls:'bad'};
+  if(dd===0)return {txt:'Due today '+timeStr(it.due),cls:'warn'};
+  if(dd===1)return {txt:'Due tomorrow '+timeStr(it.due),cls:'warn'};
+  if(dd<=3)return {txt:'In '+dd+' days',cls:'warn'};
+  return {txt:'In '+dd+' days',cls:''};
+}
+function sortByDue(a,b){return new Date(a.due)-new Date(b.due);}
+function visible(){
+  var tf=Object.keys(S.types);
+  return S.items.filter(function(i){
+    return (!tf.length||S.types[i.type||'other'])&&(S.modFilter==='all'||i.moduleId===S.modFilter);
+  });
+}
+function startOf(it){return (it.start&&it.start<it.due)?it.start:it.due;}
+function isRange(it){return !!it.start&&it.start.slice(0,10)<it.due.slice(0,10);}
+function rangeStr(it){return dateStr(it.start)+' to '+dateStr(it.due);}
+function normTitle(t){
+  t=String(t||'').toLowerCase().replace(/\s+/g,' ').trim();
+  for(var i=0;i<2;i++)t=t.replace(/\s*\(?\b(is due to be handed in|is due|is closing|closes|close|opens|open|due)\b\)?\s*$/,'').trim();
+  return t.replace(/[\s.:;,-]+$/,'');
+}
+function clusterEntries(entries){
+  var by={},out=[];
+  entries.forEach(function(x){(by[x.key]=by[x.key]||[]).push(x);});
+  Object.keys(by).forEach(function(k){
+    var arr=by[k].sort(function(a,b){return a.s-b.s;}),cur=null;
+    arr.forEach(function(x){
+      if(cur&&(x.s-cur.e)/86400000<=5&&(Math.max(cur.e,x.e)-cur.s)/86400000<=10){
+        cur.members.push(x);cur.e=new Date(Math.max(cur.e,x.e));
+      }else{cur={s:x.s,e:x.e,members:[x]};out.push(cur);}
+    });
+  });
+  return out;
+}
+function toast(msg){
+  var host=document.getElementById('toastHost');
+  var t=document.createElement('div');t.className='toast';t.setAttribute('role','status');t.textContent=msg;
+  host.innerHTML='';host.appendChild(t);
+  setTimeout(function(){if(t.parentNode)t.parentNode.removeChild(t);},2600);
+}
+
+/* ---------- render ---------- */
+function render(){
+  renderTabs();
+  var app=document.getElementById('app');
+  if(S.tab==='glance')app.innerHTML=viewGlance();
+  else if(S.tab==='planner')app.innerHTML=viewPlanner();
+  else if(S.tab==='tracker')app.innerHTML=viewTracker();
+  else app.innerHTML=viewModules();
+}
+function renderTabs(){
+  var defs=[['glance','Glance'],['planner','Planner'],['tracker','Tracker'],['modules','Modules']];
+  document.getElementById('tabs').innerHTML=defs.map(function(t){
+    return '<button class="tab" role="tab" data-tab="'+t[0]+'" aria-selected="'+(S.tab===t[0])+'">'+t[1]+'</button>';
+  }).join('');
+}
+
+function filterBar(){
+  if(!S.items.length)return '';
+  var base=S.items.filter(function(i){return S.modFilter==='all'||i.moduleId===S.modFilter;});
+  var counts={};base.forEach(function(i){var t=i.type||'other';counts[t]=(counts[t]||0)+1;});
+  var any=Object.keys(S.types).length;
+  var h='<div class="fbar" role="group" aria-label="Filter by type"><button class="fchip" data-act="clearTypes" aria-pressed="'+(!any)+'">All <span>'+base.length+'</span></button>';
+  Object.keys(TYPES).forEach(function(k){
+    if(!counts[k]&&!S.types[k])return;
+    h+='<button class="fchip" data-act="toggleType" data-type="'+k+'" aria-pressed="'+(!!S.types[k])+'">'+TYPES[k]+' <span>'+(counts[k]||0)+'</span></button>';
+  });
+  h+='<select id="modFilter" aria-label="Filter by module"><option value="all">All modules</option>'+S.modules.map(function(m){return '<option value="'+m.id+'"'+(S.modFilter===m.id?' selected':'')+'>'+esc(m.name)+'</option>';}).join('')+'</select></div>';
+  return h;
+}
+
+function emptyState(){
+  return '<div class="empty"><h3>Nothing here yet</h3><p>Add your modules first, then your assignments. If Loop gives you a calendar link or file, you can import deadlines in one go.</p>'+
+  '<div class="actions"><button class="btn primary" data-act="addModule">Add a module</button><button class="btn" data-act="import">Import from Loop calendar</button><button class="btn ghost" data-act="sample">Try with sample data</button></div></div>';
+}
+
+function itemRow(it,showDate){
+  var r=rel(it);
+  return '<div class="row"><span class="swatch" style="background:'+colorOf(it)+'"></span>'+
+    '<button class="check'+(isDone(it)?' on':'')+'" data-act="toggle" data-id="'+it.id+'" aria-label="'+(isDone(it)?'Mark as to do':'Mark as submitted')+': '+esc(it.title)+'">&#10003;</button>'+
+    '<button class="main" data-act="editItem" data-id="'+it.id+'"><div class="title">'+esc(it.title)+'</div>'+
+    '<div class="meta">'+esc(modName(it))+' &middot; '+TYPES[it.type||'other']+(it.weight?' &middot; '+esc(it.weight)+'%':'')+(isRange(it)?' &middot; '+rangeStr(it):(showDate?' &middot; '+dateStr(it.due)+' '+timeStr(it.due):''))+'</div></button>'+
+    '<span class="pill '+r.cls+'">'+r.txt+'</span></div>';
+}
+
+function viewGlance(){
+  var now=new Date();
+  var open=visible().filter(function(i){return !isDone(i);}).sort(sortByDue);
+  var overdue=open.filter(function(i){return new Date(i.due)<now;});
+  var week=open.filter(function(i){var d=new Date(i.due);return d>=now && dayDiff(i.due)<=7;});
+  var later=open.filter(function(i){return dayDiff(i.due)>7;});
+  var next=open.filter(function(i){return new Date(i.due)>=now;})[0];
+  var h='<section class="hero"><p class="date">'+now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})+'</p>';
+  if(!S.items.length){
+    h+='<h1>Your term at a glance</h1><p class="sub">Modules, deadlines and progress in one place.</p></section>'+emptyState();
+    return h;
+  }
+  var head;
+  if(overdue.length)head=overdue.length+(overdue.length===1?' thing is':' things are')+' overdue';
+  else if(week.length)head=week.length+(week.length===1?' deadline':' deadlines')+' in the next 7 days';
+  else head='Nothing due in the next 7 days';
+  h+='<h1>'+head+'</h1>';
+  if(next){
+    var r=rel(next);
+    h+='<div class="next"><span class="bar" style="background:'+colorOf(next)+'"></span><div class="body"><div class="m">Next deadline</div><div class="t">'+esc(next.title)+'</div>'+
+    '<div class="m">'+esc(modName(next))+' &middot; '+(isRange(next)?rangeStr(next)+', closes at ':dateStr(next.due)+' at ')+timeStr(next.due)+'</div></div><div style="padding:14px 14px 0 0"><span class="pill '+r.cls+'">'+r.txt+'</span></div></div>';
+  }
+  h+='</section>'+filterBar();
+  if(!visible().length){
+    return h+'<div class="empty" style="margin-top:20px"><h3>No work matches these filters</h3><p>Try a different type or module.</p><div class="actions"><button class="btn" data-act="clearFilters">Clear filters</button></div></div>';
+  }
+  function grp(title,list,showDate){
+    if(!list.length)return '';
+    return '<section class="group"><h2>'+title+'<span class="count">'+list.length+'</span></h2>'+list.map(function(i){return itemRow(i,showDate);}).join('')+'</section>';
+  }
+  h+=grp('Overdue',overdue,true)+grp('Next 7 days',week,true)+grp('Later',later,true);
+  if(!open.length)h+='<div class="empty"><h3>All caught up</h3><p>Everything is submitted. Add the next piece of work when it is posted on Loop.</p></div>';
+  return h;
+}
+
+function viewPlanner(){
+  var m=S.calMonth,first=new Date(m.getFullYear(),m.getMonth(),1);
+  var offset=(first.getDay()+6)%7;
+  var start=new Date(m.getFullYear(),m.getMonth(),1-offset);
+  var todayS=ymd(new Date());
+  var byDay={};
+  visible().forEach(function(i){
+    var e=new Date(i.due),n=0;
+    for(var d=startOfDay(new Date(startOf(i)));d<=e&&n<62;d=new Date(d.getFullYear(),d.getMonth(),d.getDate()+1),n++){
+      var kk=ymd(d);(byDay[kk]=byDay[kk]||[]).push(i);
+    }
+  });
+  var h=filterBar()+'<div class="cal-head"><h2>'+m.toLocaleDateString('en-GB',{month:'long',year:'numeric'})+'</h2><div class="cal-nav">'+
+    '<button class="btn small" data-act="prevMonth" aria-label="Previous month">&lsaquo; Prev</button>'+
+    '<button class="btn small" data-act="thisMonth">Today</button>'+
+    '<button class="btn small" data-act="nextMonth" aria-label="Next month">Next &rsaquo;</button></div></div><div class="cal">';
+  ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'].forEach(function(d){h+='<div class="dow">'+d+'</div>';});
+  for(var i=0;i<42;i++){
+    var d=new Date(start.getFullYear(),start.getMonth(),start.getDate()+i),k=ymd(d),list=(byDay[k]||[]).slice().sort(sortByDue);
+    var cls='day'+(d.getMonth()!==m.getMonth()?' out':'')+(k===todayS?' today':'')+(k===S.selDay?' sel':'');
+    h+='<button class="'+cls+'" data-act="selDay" data-day="'+k+'" aria-label="'+d.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})+', '+list.length+' due"><span class="n">'+d.getDate()+'</span>';
+    h+='<span class="dots">'+list.slice(0,6).map(function(it){return '<span class="dot'+(k!==it.due.slice(0,10)?' span':'')+'" style="background:'+colorOf(it)+'"></span>';}).join('')+'</span>';
+    list.slice(0,3).forEach(function(it){h+='<span class="chip'+(k!==it.due.slice(0,10)?' span':'')+'" style="--c:'+colorOf(it)+(isDone(it)?';text-decoration:line-through':'')+'">'+esc(it.title)+'</span>';});
+    if(list.length>3)h+='<span class="chip" style="--c:var(--line)">+'+(list.length-3)+' more</span>';
+    h+='</button>';
+  }
+  h+='</div>';
+  var sel=(byDay[S.selDay]||[]).slice().sort(sortByDue);
+  var sd=new Date(S.selDay+'T12:00');
+  h+='<section class="dayitems"><h2 style="font-size:20px;margin-bottom:10px">'+sd.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long'})+'</h2>';
+  if(sel.length)h+=sel.map(function(i){return itemRow(i,false);}).join('');
+  else h+='<div class="empty" style="padding:18px"><p style="margin:0 0 10px">Nothing due this day.</p><button class="btn small" data-act="addOnDay">Add something for this day</button></div>';
+  h+='</section>';
+  return h;
+}
+
+function viewTracker(){
+  if(!S.items.length)return '<div style="margin-top:24px">'+emptyState()+'</div>';
+  var h=filterBar()+'<div class="board">';
+  Object.keys(STATUS).forEach(function(st){
+    var list=visible().filter(function(i){return i.status===st;}).sort(sortByDue);
+    h+='<section class="col"><h3>'+STATUS[st]+'<span>'+list.length+'</span></h3>';
+    h+=list.map(function(it){
+      var r=rel(it);
+      var so=Object.keys(STATUS).map(function(k){return '<option value="'+k+'"'+(it.status===k?' selected':'')+'>'+STATUS[k]+'</option>';}).join('');
+      return '<div class="card" style="--c:'+colorOf(it)+'"><button class="title" data-act="editItem" data-id="'+it.id+'">'+esc(it.title)+'</button>'+
+        '<div class="meta">'+esc(modName(it))+' &middot; '+(isRange(it)?rangeStr(it):dateStr(it.due))+(it.status==='graded'&&it.mark!==''&&it.mark!=null?' &middot; '+esc(it.mark)+'%':'')+'</div>'+
+        (!isDone(it)?'<div style="margin-bottom:8px"><span class="pill '+r.cls+'">'+r.txt+'</span></div>':'')+
+        '<select class="statusSel" data-id="'+it.id+'" aria-label="Status for '+esc(it.title)+'">'+so+'</select></div>';
+    }).join('')||'<p class="hint" style="margin:4px">Nothing here.</p>';
+    h+='</section>';
+  });
+  return h+'</div>';
+}
+
+function gradeInfo(modId){
+  var list=S.items.filter(function(i){return i.moduleId===modId;});
+  var graded=list.filter(function(i){return i.status==='graded'&&i.mark!==''&&i.mark!=null&&i.weight;});
+  var earned=0,wDone=0,wTotal=0;
+  list.forEach(function(i){wTotal+=Number(i.weight)||0;});
+  graded.forEach(function(i){earned+=Number(i.mark)*Number(i.weight)/100;wDone+=Number(i.weight);});
+  return {list:list,done:list.filter(isDone).length,earned:earned,wDone:wDone,wTotal:wTotal,avg:wDone?earned/wDone*100:null};
+}
+function viewModules(){
+  if(!S.modules.length)return '<div style="margin-top:24px">'+emptyState()+'</div>';
+  var h='<div class="cal-head"><h2>Modules</h2><button class="btn primary small" data-act="addModule">Add module</button></div><div class="grid">';
+  S.modules.forEach(function(m){
+    var g=gradeInfo(m.id),pct=g.list.length?Math.round(g.done/g.list.length*100):0;
+    var next=g.list.filter(function(i){return !isDone(i);}).sort(sortByDue)[0];
+    h+='<article class="mod" style="--c:'+m.color+'"><h3>'+esc(m.name)+'</h3><div class="code">'+esc([m.code,m.lecturer].filter(Boolean).join(' with '))+'</div>'+
+      '<div class="kv"><span>Work submitted</span><span>'+g.done+' of '+g.list.length+'</span></div><div class="prog" role="img" aria-label="'+pct+' percent submitted"><i style="width:'+pct+'%"></i></div>'+
+      '<div class="kv"><span>Next due</span><span>'+(next?esc(dateStr(next.due)):'None')+'</span></div>'+
+      '<div class="kv"><span>Average so far</span><span>'+(g.avg==null?'No marks yet':g.avg.toFixed(1)+'%')+'</span></div>'+
+      '<div class="kv"><span>Marks banked</span><span>'+g.earned.toFixed(1)+' of '+g.wDone+' graded, '+g.wTotal+' total</span></div>'+
+      '<div class="acts"><button class="btn small" data-act="addToMod" data-id="'+m.id+'">Add work</button><button class="btn small" data-act="editModule" data-id="'+m.id+'">Edit</button>'+
+      (m.url?'<a class="btn small" href="'+esc(m.url)+'" target="_blank" rel="noopener">Open in Loop</a>':'')+'</div></article>';
+  });
+  return h+'</div>';
+}
+
+/* ---------- dialogs ---------- */
+var dlg=document.getElementById('dlg');
+function openDlg(html){dlg.innerHTML='<div class="dlg">'+html+'</div>';if(!dlg.open)dlg.showModal();}
+function closeDlg(){if(dlg.open)dlg.close();S.confirm=null;}
+dlg.addEventListener('click',function(e){if(e.target===dlg)closeDlg();});
+
+function modOptions(sel){return S.modules.map(function(m){return '<option value="'+m.id+'"'+(m.id===sel?' selected':'')+'>'+esc(m.name)+'</option>';}).join('');}
+
+function itemDialog(id,defaults){
+  if(!S.modules.length){toast('Add a module first');moduleDialog();return;}
+  var it=id?itemById(id):Object.assign({moduleId:S.modules[0].id,type:'assignment',status:'todo',weight:'',mark:'',notes:'',title:'',due:ymd(new Date())+'T23:59'},defaults||{});
+  var typeOpts=Object.keys(TYPES).map(function(k){return '<option value="'+k+'"'+(it.type===k?' selected':'')+'>'+TYPES[k]+'</option>';}).join('');
+  var stOpts=Object.keys(STATUS).map(function(k){return '<option value="'+k+'"'+(it.status===k?' selected':'')+'>'+STATUS[k]+'</option>';}).join('');
+  openDlg('<h2>'+(id?'Edit work':'Add work')+'</h2>'+
+   '<div class="field"><label for="fTitle">Title</label><input type="text" id="fTitle" value="'+esc(it.title)+'" placeholder="e.g. Essay 1"></div>'+
+   '<div class="two"><div class="field"><label for="fMod">Module</label><select id="fMod">'+modOptions(it.moduleId)+'</select></div>'+
+   '<div class="field"><label for="fType">Type</label><select id="fType">'+typeOpts+'</select></div></div>'+
+   '<div class="two"><div class="field"><label for="fStart">Opens (optional)</label><input type="datetime-local" id="fStart" value="'+esc(it.start||'')+'"></div><div class="field"><label for="fDue">Due or closes</label><input type="datetime-local" id="fDue" value="'+esc(it.due)+'"></div></div>'+
+   '<div class="two"><div class="field"><label for="fW">Worth (% of module)</label><input type="number" id="fW" min="0" max="100" value="'+esc(it.weight)+'"></div>'+
+   '<div class="field"><label for="fSt">Status</label><select id="fSt">'+stOpts+'</select></div></div>'+
+   '<div class="field"><label for="fMark">Mark received (%)</label><input type="number" id="fMark" min="0" max="100" value="'+esc(it.mark)+'"></div>'+
+   '<div class="field"><label for="fNotes">Notes</label><input type="text" id="fNotes" value="'+esc(it.notes)+'" placeholder="Word count, submission link, reminders"></div>'+
+   '<div class="foot">'+(id?'<button class="btn danger" data-act="delItem" data-id="'+id+'">'+(S.confirm==='item'+id?'Tap again to delete':'Delete')+'</button>':'')+
+   '<div class="r"><button class="btn" data-act="closeDlg">Cancel</button><button class="btn primary" data-act="saveItem" data-id="'+(id||'')+'">Save work</button></div></div>');
+}
+function saveItem(id){
+  var title=document.getElementById('fTitle').value.trim();
+  var due=document.getElementById('fDue').value;
+  if(!title){toast('Add a title');return;}
+  if(!due){toast('Choose a due date');return;}
+  var data={title:title,start:(function(){var st=document.getElementById('fStart').value;return st&&st<due?st:'';})(),moduleId:document.getElementById('fMod').value,type:document.getElementById('fType').value,due:due,
+    weight:document.getElementById('fW').value,status:document.getElementById('fSt').value,mark:document.getElementById('fMark').value,notes:document.getElementById('fNotes').value};
+  if(id){Object.assign(itemById(id),data);}
+  else{data.id=uid();S.items.push(data);}
+  save();closeDlg();render();toast('Work saved');
+}
+
+function moduleDialog(id){
+  var m=id?modById(id):{name:'',code:'',lecturer:'',url:'',color:COLORS[S.modules.length%COLORS.length]};
+  openDlg('<h2>'+(id?'Edit module':'Add module')+'</h2>'+
+   '<div class="field"><label for="mName">Module name</label><input type="text" id="mName" value="'+esc(m.name)+'" placeholder="e.g. Database Systems"></div>'+
+   '<div class="two"><div class="field"><label for="mCode">Module code</label><input type="text" id="mCode" value="'+esc(m.code)+'"></div>'+
+   '<div class="field"><label for="mLec">Lecturer</label><input type="text" id="mLec" value="'+esc(m.lecturer)+'"></div></div>'+
+   '<div class="field"><label for="mUrl">Loop page link</label><input type="url" id="mUrl" value="'+esc(m.url)+'" placeholder="Paste the module page address from Loop"></div>'+
+   '<div class="field"><label id="colLbl">Colour</label><div class="swatches" role="group" aria-labelledby="colLbl">'+
+   COLORS.map(function(c){return '<button class="sw" style="--c:'+c+'" data-act="pickColor" data-color="'+c+'" aria-pressed="'+(c===m.color)+'" aria-label="Colour '+c+'"></button>';}).join('')+'</div><input type="hidden" id="mCol" value="'+m.color+'"></div>'+
+   '<div class="foot">'+(id?'<button class="btn danger" data-act="delModule" data-id="'+id+'">'+(S.confirm==='mod'+id?'Tap again to delete':'Delete')+'</button>':'')+
+   '<div class="r"><button class="btn" data-act="closeDlg">Cancel</button><button class="btn primary" data-act="saveModule" data-id="'+(id||'')+'">Save module</button></div></div>');
+}
+function saveModule(id){
+  var name=document.getElementById('mName').value.trim();
+  if(!name){toast('Add a module name');return;}
+  var data={name:name,code:document.getElementById('mCode').value.trim(),lecturer:document.getElementById('mLec').value.trim(),url:document.getElementById('mUrl').value.trim(),color:document.getElementById('mCol').value};
+  if(id)Object.assign(modById(id),data);else{data.id=uid();S.modules.push(data);}
+  save();closeDlg();render();toast('Module saved');
+}
+
+function addMenu(){
+  openDlg('<h2>Add</h2><button class="btn primary" data-act="addItem">Add an assignment, exam or task</button><button class="btn" data-act="addModule">Add a module</button><button class="btn" data-act="closeDlg">Close</button>');
+}
+
+function dataDialog(){
+  openDlg('<h2>Import and backup</h2>'+
+   '<p class="hint">Your planner is saved in this browser only. Use a backup to move it to another device.</p>'+
+   '<button class="btn primary" data-act="import">Import deadlines from Loop calendar</button>'+
+   '<button class="btn" data-act="dupes">Find and merge duplicates</button>'+
+   '<button class="btn" data-act="backup">Back up or restore</button>'+
+   '<button class="btn" data-act="sample">Load sample data</button>'+
+   '<button class="btn" data-act="theme">Switch light or dark</button>'+
+   '<button class="btn danger" data-act="clearAll">'+(S.confirm==='clear'?'Tap again to erase everything':'Erase everything')+'</button>'+
+   '<div class="foot"><div class="r"><button class="btn" data-act="closeDlg">Close</button></div></div>');
+}
+
+function importDialog(){
+  openDlg('<h2>Import from Loop calendar</h2>'+
+   '<p class="hint">In Loop, open Calendar, choose Import or export calendars, then Export. Pick "All" events and a time range, then download the .ics file and choose it here. You can also paste the file contents.</p>'+
+   '<div class="field"><label for="icsFile">Calendar file (.ics)</label><input type="file" id="icsFile" accept=".ics,text/calendar"></div>'+
+   '<div class="field"><label for="icsText">Or paste the contents</label><textarea id="icsText" placeholder="BEGIN:VCALENDAR..."></textarea></div>'+
+   '<p class="hint">New modules are created from the course names in the file. Items already imported are skipped, so you can re-import any time.</p>'+
+   '<div class="foot"><div class="r"><button class="btn" data-act="closeDlg">Cancel</button><button class="btn primary" data-act="runImport">Import</button></div></div>');
+  document.getElementById('icsFile').addEventListener('change',function(e){
+    var f=e.target.files[0];if(!f)return;
+    var r=new FileReader();r.onload=function(){document.getElementById('icsText').value=String(r.result);};r.readAsText(f);
+  });
+}
+
+function backupDialog(){
+  openDlg('<h2>Back up or restore</h2><p class="hint">Copy this text somewhere safe. To restore, paste a backup into the box and choose Restore.</p>'+
+   '<textarea id="bk" aria-label="Backup text">'+esc(JSON.stringify({modules:S.modules,items:S.items}))+'</textarea>'+
+   '<div class="foot"><button class="btn" data-act="selBackup">Select all</button><div class="r"><button class="btn" data-act="closeDlg">Close</button><button class="btn primary" data-act="restore">Restore</button></div></div>');
+}
+
+/* ---------- ICS import ---------- */
+function icsUnescape(v){return v.replace(/\\n/gi,' ').replace(/\\,/g,',').replace(/\\;/g,';').replace(/\\\\/g,'\\');}
+function parseICS(text){
+  text=text.replace(/\r?\n[ \t]/g,'');
+  var lines=text.split(/\r?\n/),events=[],cur=null;
+  lines.forEach(function(line){
+    if(line==='BEGIN:VEVENT'){cur={};}
+    else if(line==='END:VEVENT'){if(cur)events.push(cur);cur=null;}
+    else if(cur){
+      var idx=line.indexOf(':');if(idx<0)return;
+      var head=line.slice(0,idx),key=head.split(';')[0].toUpperCase();
+      cur[key]=icsUnescape(line.slice(idx+1));
+      if(key==='DTSTART')cur._dtHead=head;
+    }
+  });
+  return events;
+}
+function parseDT(v,head){
+  if(!v)return null;
+  var m;
+  if((m=v.match(/^(\d{4})(\d{2})(\d{2})$/)))return new Date(+m[1],+m[2]-1,+m[3],23,59);
+  if((m=v.match(/^(\d{4})(\d{2})(\d{2})T(\d{2})(\d{2})(\d{2})(Z?)$/))){
+    if(m[7])return new Date(Date.UTC(+m[1],+m[2]-1,+m[3],+m[4],+m[5],+m[6]));
+    return new Date(+m[1],+m[2]-1,+m[3],+m[4],+m[5],+m[6]);
+  }
+  return null;
+}
+function guessType(t){
+  t=t.toLowerCase();
+  if(/lecture|tutorial/.test(t))return 'other';
+  if(/exam/.test(t))return 'exam';
+  if(/quiz|test|\bca\b/.test(t))return 'quiz';
+  if(/project/.test(t))return 'project';
+  if(/read/.test(t))return 'reading';
+  return 'assignment';
+}
+function uidsOf(it){var u=(it.uids||[]).slice();if(it.uid&&u.indexOf(it.uid)<0)u.push(it.uid);return u;}
+function findMod(name){
+  var n=name.toLowerCase();
+  for(var i=0;i<S.modules.length;i++)if(S.modules[i].name.toLowerCase()===n)return S.modules[i];
+  return null;
+}
+function runImport(){
+  var text=document.getElementById('icsText').value;
+  if(!/BEGIN:VCALENDAR/i.test(text)){toast('That does not look like a calendar file');return;}
+  var evs=parseICS(text),known={},skipped=0,entries=[];
+  S.items.forEach(function(i){uidsOf(i).forEach(function(u){known[u]=true;});});
+  evs.forEach(function(ev){
+    var title=(ev.SUMMARY||'').trim(),sD=parseDT(ev.DTSTART);
+    if(!sD||!title)return;
+    var id=ev.UID||(title+'|'+ev.DTSTART);
+    if(known[id]){skipped++;return;}
+    var allDay=/^\d{8}$/.test(ev.DTSTART),st=sD,en=sD;
+    if(ev.DTEND){
+      var eD=parseDT(ev.DTEND);
+      if(eD){
+        if(allDay){
+          eD=new Date(eD.getFullYear(),eD.getMonth(),eD.getDate()-1,23,59);
+          if(startOfDay(eD)>startOfDay(sD)){st=new Date(sD.getFullYear(),sD.getMonth(),sD.getDate(),0,0);en=eD;}
+        }else if(startOfDay(eD)>startOfDay(sD)){en=eD;}
+      }
+    }
+    var course=(ev.CATEGORIES||'General').split(',')[0].trim()||'General';
+    var cleaned=title.replace(/\s+(is due|closes|opens|is due to be handed in)$/i,'').trim()||title;
+    entries.push({key:course.toLowerCase()+'|'+normTitle(title),norm:normTitle(title),s:st,e:en,id:id,raw:title,cleaned:cleaned,course:course,desc:ev.DESCRIPTION||''});
+  });
+  var clusters=clusterEntries(entries),added=0,merged=0,newMods=0;
+  clusters.forEach(function(c){
+    var first=c.members[0],mod=findMod(first.course);
+    if(!mod){mod={id:uid(),name:first.course,code:'',lecturer:'',url:'',color:COLORS[S.modules.length%COLORS.length]};S.modules.push(mod);newMods++;}
+    var ids=c.members.map(function(m){return m.id;});
+    var match=null;
+    S.items.forEach(function(it){
+      if(match||it.moduleId!==mod.id||normTitle(it.title)!==first.norm)return;
+      var is=new Date(startOf(it)),ie=new Date(it.due);
+      if((c.s-ie)/86400000<=5&&(is-c.e)/86400000<=5)match=it;
+    });
+    var extra=c.members.length-1;
+    if(match){
+      var ms=new Date(Math.min(new Date(startOf(match)),c.s)),me=new Date(Math.max(new Date(match.due),c.e));
+      match.start=ymd(ms)===ymd(me)?'':toLocalStr(ms);
+      match.due=toLocalStr(me);
+      match.uids=uidsOf(match).concat(ids);
+      merged+=c.members.length;
+    }else{
+      var sameDay=ymd(c.s)===ymd(c.e);
+      var desc='';c.members.forEach(function(m){if(!desc&&m.desc)desc=m.desc;});
+      S.items.push({id:uid(),uid:ids[0],uids:ids,title:first.cleaned,moduleId:mod.id,type:guessType(c.members.map(function(m){return m.raw;}).join(' ')),
+        start:sameDay?'':toLocalStr(c.s),due:toLocalStr(c.e),weight:'',status:'todo',mark:'',notes:desc.slice(0,160)});
+      added++;merged+=extra;
+    }
+  });
+  save();closeDlg();render();
+  toast('Added '+added+(added===1?' item':' items')+(merged?', merged '+merged+' duplicate'+(merged===1?'':'s')+' or range days':'')+(newMods?', '+newMods+' new modules':'')+(skipped?', '+skipped+' already there':''));
+}
+
+var STORDER={todo:0,doing:1,submitted:2,graded:3};
+function findDupes(){
+  var entries=S.items.map(function(it){
+    return {key:it.moduleId+'|'+normTitle(it.title),s:new Date(startOf(it)),e:new Date(it.due),it:it};
+  });
+  return clusterEntries(entries).filter(function(c){return c.members.length>1;});
+}
+function dupeDialog(){
+  var g=findDupes();
+  if(!g.length){
+    openDlg('<h2>Duplicates</h2><p class="hint">No duplicates found. Work counts as a duplicate when it has the same title in the same module and falls within a few days of the other entry.</p><div class="foot"><div class="r"><button class="btn" data-act="closeDlg">Close</button></div></div>');
+    return;
+  }
+  var list=g.map(function(c){
+    var days=c.members.map(function(m){return dateStr(m.it.due);}).join(', ');
+    var sameDay=ymd(c.s)===ymd(c.e);
+    var res=sameDay?dateStr(toLocalStr(c.e)):dateStr(toLocalStr(c.s))+' to '+dateStr(toLocalStr(c.e));
+    return '<div class="dupe"><b>'+esc(c.members[0].it.title)+' ('+esc(modName(c.members[0].it))+')</b>'+c.members.length+' entries ('+days+') become 1: '+res+'</div>';
+  }).join('');
+  openDlg('<h2>Duplicates found</h2><p class="hint">'+g.length+(g.length===1?' group':' groups')+' of repeated work. Merging keeps one entry per group, turns the dates into a range, and keeps the furthest status, marks and weights.</p><div class="dupelist">'+list+'</div>'+
+    '<div class="foot"><div class="r"><button class="btn" data-act="closeDlg">Cancel</button><button class="btn primary" data-act="mergeDupes">Merge all</button></div></div>');
+}
+function mergeDupes(){
+  var g=findDupes(),gone={},n=0;
+  g.forEach(function(c){
+    var its=c.members.map(function(m){return m.it;});
+    var p=its.slice().sort(function(a,b){return (STORDER[b.status]||0)-(STORDER[a.status]||0);})[0];
+    var ids=uidsOf(p);
+    its.forEach(function(o){
+      if(o===p)return;
+      ['weight','mark','notes'].forEach(function(f){if((p[f]===''||p[f]==null)&&o[f]!==''&&o[f]!=null)p[f]=o[f];});
+      uidsOf(o).forEach(function(u){if(ids.indexOf(u)<0)ids.push(u);});
+      gone[o.id]=true;n++;
+    });
+    p.uids=ids;
+    p.start=ymd(c.s)===ymd(c.e)?'':toLocalStr(c.s);
+    p.due=toLocalStr(c.e);
+  });
+  S.items=S.items.filter(function(i){return !gone[i.id];});
+  save();closeDlg();render();toast('Merged '+n+' duplicate'+(n===1?'':'s'));
+}
+
+function loadSample(){
+  var now=new Date();
+  function d(days,h,m){var x=new Date(now.getFullYear(),now.getMonth(),now.getDate()+days,h||23,m==null?59:m);return toLocalStr(x);}
+  var m1={id:uid(),name:'Database Systems',code:'COMP 301',lecturer:'Dr Murphy',url:'',color:COLORS[0]};
+  var m2={id:uid(),name:'Professional Practice',code:'PROF 204',lecturer:'Ms Byrne',url:'',color:COLORS[1]};
+  var m3={id:uid(),name:'Web Development',code:'WEB 210',lecturer:'Mr Walsh',url:'',color:COLORS[2]};
+  S.modules=[m1,m2,m3];
+  S.items=[
+    {id:uid(),title:'SQL lab report',moduleId:m1.id,type:'assignment',due:d(-1,17,0),weight:10,status:'doing',mark:'',notes:''},
+    {id:uid(),title:'Reflective journal',moduleId:m2.id,type:'assignment',due:d(1,12,0),weight:20,status:'todo',mark:'',notes:''},
+    {id:uid(),title:'Chapter 4 quiz',moduleId:m1.id,type:'quiz',due:d(3,23,59),weight:5,status:'todo',mark:'',notes:''},
+    {id:uid(),title:'Portfolio site',moduleId:m3.id,type:'project',start:d(5,9,0),due:d(12,17,0),weight:40,status:'doing',mark:'',notes:''},
+    {id:uid(),title:'Mid-term exam',moduleId:m1.id,type:'exam',due:d(20,10,0),weight:30,status:'todo',mark:'',notes:''},
+    {id:uid(),title:'CV and cover letter',moduleId:m2.id,type:'assignment',due:d(-8,17,0),weight:15,status:'graded',mark:72,notes:''},
+    {id:uid(),title:'HTML basics test',moduleId:m3.id,type:'quiz',due:d(-14,12,0),weight:10,status:'graded',mark:81,notes:''}
+  ];
+  save();closeDlg();render();toast('Sample data loaded');
+}
+
+/* ---------- events ---------- */
+document.addEventListener('click',function(e){
+  var t=e.target.closest('[data-tab],[data-act]');
+  if(!t)return;
+  if(t.dataset.tab){S.tab=t.dataset.tab;render();window.scrollTo(0,0);return;}
+  var a=t.dataset.act,id=t.dataset.id;
+  switch(a){
+    case 'toggle':var it=itemById(id);it.status=isDone(it)?'todo':'submitted';save();render();break;
+    case 'editItem':itemDialog(id);break;
+    case 'addItem':itemDialog(null,{});break;
+    case 'addOnDay':itemDialog(null,{due:S.selDay+'T23:59'});break;
+    case 'addToMod':itemDialog(null,{moduleId:id});break;
+    case 'addModule':moduleDialog();break;
+    case 'editModule':moduleDialog(id);break;
+    case 'closeDlg':closeDlg();break;
+    case 'saveItem':saveItem(id||null);break;
+    case 'saveModule':saveModule(id||null);break;
+    case 'pickColor':
+      document.getElementById('mCol').value=t.dataset.color;
+      document.querySelectorAll('.sw').forEach(function(s){s.setAttribute('aria-pressed',s===t?'true':'false');});break;
+    case 'delItem':
+      if(S.confirm==='item'+id){S.items=S.items.filter(function(i){return i.id!==id;});save();closeDlg();render();toast('Work deleted');}
+      else{S.confirm='item'+id;t.textContent='Tap again to delete';}break;
+    case 'delModule':
+      if(S.confirm==='mod'+id){S.modules=S.modules.filter(function(m){return m.id!==id;});S.items=S.items.filter(function(i){return i.moduleId!==id;});save();closeDlg();render();toast('Module deleted');}
+      else{S.confirm='mod'+id;t.textContent='Tap again to delete';}break;
+    case 'prevMonth':S.calMonth=new Date(S.calMonth.getFullYear(),S.calMonth.getMonth()-1,1);render();break;
+    case 'nextMonth':S.calMonth=new Date(S.calMonth.getFullYear(),S.calMonth.getMonth()+1,1);render();break;
+    case 'thisMonth':S.calMonth=startOfMonth(new Date());S.selDay=ymd(new Date());render();break;
+    case 'selDay':S.selDay=t.dataset.day;render();break;
+    case 'toggleType':if(S.types[t.dataset.type])delete S.types[t.dataset.type];else S.types[t.dataset.type]=true;render();break;
+    case 'clearTypes':S.types={};render();break;
+    case 'clearFilters':S.types={};S.modFilter='all';render();break;
+    case 'dupes':dupeDialog();break;
+    case 'mergeDupes':mergeDupes();break;
+    case 'import':importDialog();break;
+    case 'runImport':runImport();break;
+    case 'backup':backupDialog();break;
+    case 'selBackup':var bk=document.getElementById('bk');bk.focus();bk.select();break;
+    case 'restore':
+      try{var d=JSON.parse(document.getElementById('bk').value);if(!Array.isArray(d.modules)||!Array.isArray(d.items))throw 0;S.modules=d.modules;S.items=d.items;save();closeDlg();render();toast('Backup restored');}
+      catch(err){toast('That backup text could not be read');}break;
+    case 'sample':loadSample();break;
+    case 'theme':
+      var root=document.documentElement,cur=root.getAttribute('data-theme'),dark=cur==='dark'||(cur!=='light'&&window.matchMedia&&matchMedia('(prefers-color-scheme: dark)').matches);
+      root.setAttribute('data-theme',dark?'light':'dark');break;
+    case 'clearAll':
+      if(S.confirm==='clear'){S.modules=[];S.items=[];save();closeDlg();render();toast('Everything erased');}
+      else{S.confirm='clear';t.textContent='Tap again to erase everything';}break;
+  }
+});
+document.addEventListener('change',function(e){
+  if(e.target.id==='modFilter'){S.modFilter=e.target.value;render();}
+  if(e.target.classList.contains('statusSel')){var it=itemById(e.target.dataset.id);it.status=e.target.value;save();render();}
+});
+document.getElementById('addBtn').addEventListener('click',addMenu);
+document.getElementById('dataBtn').addEventListener('click',dataDialog);
+
+load();render();
+})();
+</script>
+</body>
+</html>
